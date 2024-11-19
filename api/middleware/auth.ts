@@ -14,7 +14,8 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
-    return res.status(403).json({ message: "No token provided" });
+     res.json('No token provided');
+     return
   }
 
   try {
@@ -22,7 +23,8 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(403).json({ message: "Invalid token" });
+     res.json('Invalid token');
+     return
   }
 };
 
