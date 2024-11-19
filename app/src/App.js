@@ -8,8 +8,15 @@ function App() {
     password: "",
   });
 
-  const submitForm = async () => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({...form, [name]: value})
+  };
+
+  const submitForm = async (e) => {
+    e.preventDefault();
     try {
+      console.log('form',form)
       const { data, status } = await axios.post("http://localhost:8000/", form);
       if (status === 200) {
         console.log("Success", data);
@@ -22,12 +29,11 @@ function App() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 h-screen w-screen">
-      <section className="flex justify-center items-center h-full">
+      <section className="flex justify-center items-center h-full px-4 sm:px-6 md:px-8">
 
-        <div className="w-full max-w-lg p-8 space-y-6 ">
-
-          <h2 className="text-2xl font-bold text-[#E92928] ">Sign In</h2>
-          <p className="text-sm  text-[#A3AED0]">
+        <div className="w-full max-w-lg p-8 space-y-6">
+          <h2 className="text-2xl font-bold text-[#E92928]">Sign In</h2>
+          <p className="text-sm text-[#A3AED0]">
             Enter your email and password to sign in!
           </p>
 
@@ -37,15 +43,18 @@ function App() {
             <hr className="flex-grow border-t border-[#A3AED0]" />
           </div>
 
-          <form className="mt-4 space-y-4">
+          <form onSubmit={submitForm} className="mt-4 space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Email*
               </label>
               <input
                 type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
                 placeholder="mail@simmmple.com"
-                className="w-full px-4 py-2 mt-1 text-sm border rounded-lg "
+                className="w-full px-4 py-2 mt-1 text-sm border rounded-lg"
               />
             </div>
             <div>
@@ -55,9 +64,11 @@ function App() {
               <div className="relative">
                 <input
                   type="password"
-
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
                   placeholder="Min. 8 characters"
-                  className="w-full px-4 py-2 mt-1 text-sm border rounded-lg "
+                  className="w-full px-4 py-2 mt-1 text-sm border rounded-lg"
                 />
                 <button
                   type="button"
@@ -85,7 +96,7 @@ function App() {
               <label className="flex items-center text-sm text-gray-600">
                 <input
                   type="checkbox"
-                  className="mr-2 border-gray-300 rounded "
+                  className="mr-2 border-gray-300 rounded"
                 />
                 Keep me logged in
               </label>
@@ -107,20 +118,10 @@ function App() {
               Create an Account
             </a>
           </p>
-
-
         </div>
-
-        <div className="absolute bottom-10 flex gap-4 text-white">
-
-          <p className="text-xs text-center text-gray-400 mt-6">
-            © 2023 Spark Drive. All Rights Reserved.
-          </p>
-
-        </div>
-
       </section>
-      <section className="hidden md:flex h-full bg-[url('./assets/Image.png')] bg-cover bg-center  flex-col items-center justify-center relative">
+
+      <section className="hidden md:flex h-full bg-[url('./assets/Image.png')] bg-cover bg-center flex-col items-center justify-center relative">
         <img src={logo} alt="logo" className="h-auto w-96 mb-40" />
         <div className="absolute bottom-10 flex gap-4 text-white">
           <a href="/license" className="hover:underline">License</a>
