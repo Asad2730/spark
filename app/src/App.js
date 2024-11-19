@@ -10,13 +10,13 @@ function App() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({...form, [name]: value})
+    setForm({ ...form, [name]: value })
   };
 
   const submitForm = async (e) => {
     e.preventDefault();
     try {
-      console.log('form',form)
+      console.log('form', form)
       const { data, status } = await axios.post("http://localhost:8000/", form);
       if (status === 200) {
         console.log("Success", data);
@@ -96,7 +96,7 @@ function App() {
               <label className="flex items-center text-sm text-gray-600">
                 <input
                   type="checkbox"
-                  className="mr-2 border-gray-300 rounded"
+                  className="mr-2 border-gray-300 rounded text-[#E92928] focus:ring-[#E92928] h-4 w-4"
                 />
                 Keep me logged in
               </label>
