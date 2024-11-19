@@ -1,23 +1,126 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import axios from "axios";
+import logo from './assets/logo.png';
 
 function App() {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const submitForm = async () => {
+    try {
+      const { data, status } = await axios.post("http://localhost:8000/", form);
+      if (status === 200) {
+        console.log("Success", data);
+      }
+      console.log("status code", status);
+    } catch (ex) {
+      console.error("Error", ex);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="grid grid-cols-2 h-screen w-screen">
+      <section className="h-full">
+        <div className="flex justify-center items-center h-screen ">
+          <div className="w-full max-w-lg p-8 space-y-6 ">
+
+            <h2 className="text-2xl font-bold text-[#E92928] ">Sign In</h2>
+            <p className="text-sm  text-[#A3AED0]">
+              Enter your email and password to sign in!
+            </p>
+
+            <div className="flex items-center">
+              <hr className="flex-grow border-t border-[#A3AED0]" />
+              <span className="text-[#A3AED0] mx-4">or</span>
+              <hr className="flex-grow border-t border-[#A3AED0]" />
+            </div>
+
+            <form className="mt-4 space-y-4">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Email*
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="mail@simmmple.com"
+                  className="w-full px-4 py-2 mt-1 text-sm border rounded-lg "
+                />
+              </div>
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Password*
+                </label>
+                <div className="relative">
+                  <input
+                    type="password"
+                    id="password"
+                    placeholder="Min. 8 characters"
+                    className="w-full px-4 py-2 mt-1 text-sm border rounded-lg "
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-[#E92928]"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15 12h.01M9 12h.01M12 12h.01M12 9h.01M12 6h.01M15 6h.01M9 6h.01M6 15h.01M18 15h.01M6 12h.01M6 9h.01M18 12h.01M18 9h.01"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <label className="flex items-center text-sm text-gray-600">
+                  <input
+                    type="checkbox"
+                    className="mr-2 border-gray-300 rounded "
+                  />
+                  Keep me logged in
+                </label>
+                <a href="#" className="text-sm text-[#E92928] hover:underline">
+                  Forget password?
+                </a>
+              </div>
+              <button
+                type="submit"
+                className="w-full py-2 text-white bg-[#E92928] rounded-lg"
+              >
+                Sign In
+              </button>
+            </form>
+            <p className="text-sm text-center text-gray-600">
+              Not registered yet?{" "}
+              <a href="#" className="text-[#E92928] hover:underline">
+                Create an Account
+              </a>
+            </p>
+            <p className="text-xs text-center text-gray-400 mt-6">
+              © 2023 Spark Drive. All Rights Reserved.
+            </p>
+          </div>
+        </div>
+
+      </section>
+      <section className="h-full bg-[url('./assets/Image.png')] bg-cover bg-center flex flex-col items-center justify-center relative">
+        <img src={logo} alt="logo" className="h-auto w-96 mb-40" />
+        <div className="absolute bottom-10 flex gap-4 text-white">
+          <a href="/license" className="hover:underline">License</a>
+          <a href="/terms" className="hover:underline">Term of Use</a>
+          <a href="/blog" className="hover:underline">Blog</a>
+        </div>
+      </section>
     </div>
   );
 }
